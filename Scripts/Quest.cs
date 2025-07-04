@@ -142,6 +142,9 @@ namespace Holypastry.Bakery.Quests
             {
                 if (_verbose)
                     DebugLog($"Step ({currentStep.StepTitle}) completed.");
+
+                currentStep.Results.ForEach(r => r.Execute());
+
                 QuestEvents.OnStepCompleted?.Invoke(this, CurrentStep);
                 _currentStepIndex++;
             }
