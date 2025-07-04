@@ -2,7 +2,7 @@ using System;
 using Holypastry.Bakery.Quests;
 using UnityEngine;
 
-public static partial class QuestServices
+public static class QuestServices
 {
     public static Action<QuestData> StartQuest = delegate { };
     public static Action<QuestData> InterruptQuest = delegate { };
@@ -12,7 +12,7 @@ public static partial class QuestServices
     //  public static Action<string> CompleteConditionByName = delegate { };
     //  public static Action<Condition> CompleteCondition = delegate { };
 
-    internal static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
+    public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
 
-    internal static Func<QuestData, bool> IsQuestCompleted = (questData) => false;
+    public static Func<QuestData, bool> IsQuestCompleted = (questData) => false;
 }

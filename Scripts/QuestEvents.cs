@@ -1,7 +1,7 @@
 using System;
 using Holypastry.Bakery.Quests;
 
-public static partial class QuestEvents
+public static class QuestEvents
 {
     public static Action<QuestData> OnQuestStarted = delegate { };
     public static Action<QuestData> OnQuestInterrupted = delegate { };
