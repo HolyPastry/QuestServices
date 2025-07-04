@@ -19,7 +19,7 @@ namespace Holypastry.Bakery.Quests
 
         }
 
-        public const string CollectionPath = "Quests";
+
         public string Description;
         public bool IsHidden;
         public bool IsRepeatable;

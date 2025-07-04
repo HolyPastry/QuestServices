@@ -12,7 +12,7 @@ namespace Holypastry.Bakery.Quests
 
     public class QuestManager : Service
     {
-
+        [SerializeField] private string _collectionPath = "Quests";
         [SerializeField] private float _refreshRate = 1f;
         [SerializeField] private bool _verbose = false;
 
@@ -27,7 +27,7 @@ namespace Holypastry.Bakery.Quests
 
         void Awake()
         {
-            _collection = new DataCollection<QuestData>(QuestData.CollectionPath);
+            _collection = new DataCollection<QuestData>(_collectionPath);
             GetComponents(_extensions);
         }
 
