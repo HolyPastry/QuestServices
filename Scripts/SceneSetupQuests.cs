@@ -8,7 +8,7 @@ namespace Holypastry.Bakery.Quests
     public class SceneSetupQuests : SceneSetupScript
     {
         [SerializeField] private List<QuestData> _quests = new();
-        protected override IEnumerator Routine()
+        public override IEnumerator Routine()
         {
             yield return FlowServices.WaitUntilReady();
             yield return QuestServices.WaitUntilReady();
@@ -18,7 +18,6 @@ namespace Holypastry.Bakery.Quests
                 QuestServices.StartQuest(quest);
                 yield return null;
             }
-            EndScript();
         }
     }
 }
