@@ -40,6 +40,7 @@ namespace Holypastry.Bakery.Quests
             CompleteQuestRequest = delegate { };
             QuestServices.ForceConditionCheck = delegate { };
             QuestServices.IsQuestCompleted = (questData) => false;
+            QuestServices.ForceComplete = delegate { };
         }
 
         void OnEnable()
@@ -51,6 +52,7 @@ namespace Holypastry.Bakery.Quests
             CompleteQuestRequest = CompleteQuest;
             QuestServices.ForceConditionCheck = CheckConditions;
             QuestServices.IsQuestCompleted = IsQuestCompleted;
+            QuestServices.ForceComplete = ForceComplete;
 
         }
 
@@ -162,6 +164,17 @@ namespace Holypastry.Bakery.Quests
             foreach (var extension in _extensions)
                 extension.Save();
 
+        }
+        private void ForceComplete(QuestData data)
+        {
+            var quest = _ongoingQuests.Find(x => x.Data == data);
+            if (quest == null)
+            {
+                Debug.LogWarning($"Quest {data.name} not found");
+                return;
+            }
+            DebugLog($"Forcing completion of quest {data.name}");
+            CompleteQuest(quest);
         }
 
         private void CompleteQuest(Quest quest)
