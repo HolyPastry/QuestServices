@@ -9,8 +9,6 @@ public static class QuestServices
 
     public static Action<QuestData> ForceConditionCheck = delegate { };
     public static Action<string> StartQuestByName = delegate { };
-    //  public static Action<string> CompleteConditionByName = delegate { };
-    //  public static Action<Condition> CompleteCondition = delegate { };
 
     public static Func<WaitUntil> WaitUntilReady = () => new WaitUntil(() => true);
 
