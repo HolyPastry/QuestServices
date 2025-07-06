@@ -41,6 +41,7 @@ namespace Holypastry.Bakery.Quests
             QuestServices.ForceConditionCheck = delegate { };
             QuestServices.IsQuestCompleted = (questData) => false;
             QuestServices.ForceComplete = delegate { };
+            QuestServices.GetCurrentStep = (data) => null;
         }
 
         void OnEnable()
@@ -53,9 +54,9 @@ namespace Holypastry.Bakery.Quests
             QuestServices.ForceConditionCheck = CheckConditions;
             QuestServices.IsQuestCompleted = IsQuestCompleted;
             QuestServices.ForceComplete = ForceComplete;
+            QuestServices.GetCurrentStep = GetCurrentStep;
 
         }
-
 
 
         protected override IEnumerator Start()
@@ -72,6 +73,25 @@ namespace Holypastry.Bakery.Quests
             StartCoroutine(CheckConditionsRoutine());
             _isReady = true;
         }
+
+        private QuestData.Step GetCurrentStep(QuestData data)
+        {
+            if (data == null)
+            {
+                Debug.LogWarning("QuestData is null");
+                return null;
+            }
+
+            var quest = _ongoingQuests.Find(x => x.Data == data);
+            if (quest == null)
+            {
+                Debug.LogWarning($"Quest {data.name} not found");
+                return null;
+            }
+
+            return quest.CurrentStep;
+        }
+
 
         private bool IsQuestCompleted(QuestData data)
         {

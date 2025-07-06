@@ -14,5 +14,8 @@ public static class QuestServices
 
     public static Func<QuestData, bool> IsQuestCompleted = (questData) => false;
 
-    internal static Action<QuestData> ForceComplete = delegate { };
+    public static Action<QuestData> ForceComplete = delegate { };
+
+    public static Func<QuestData, QuestData.Step> GetCurrentStep = (data) => null;
+
 }
