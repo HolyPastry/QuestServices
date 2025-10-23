@@ -63,6 +63,11 @@ namespace Holypastry.Bakery.Quests
                 var step = Data.Steps[stepIndex];
                 foreach (var condition in step.Conditions)
                 {
+                    if (condition == null)
+                    {
+                        DebugLog($"Warning: Condition in step {stepIndex} is null.");
+                        continue;
+                    }
                     Progress.Add((stepIndex, condition, false));
                 }
             }
@@ -143,7 +148,15 @@ namespace Holypastry.Bakery.Quests
                 if (_verbose)
                     DebugLog($"Step ({currentStep.StepTitle}) completed.");
 
-                currentStep.Results.ForEach(r => r.Execute());
+                currentStep.Results.ForEach(r =>
+                {
+                    if (r == null)
+                    {
+                        Debug.LogWarning($"Warning: Result is null. {Data.name}: {currentStep.StepTitle}");
+                        return;
+                    }
+                    r.Execute();
+                });
 
                 QuestEvents.OnStepCompleted?.Invoke(this, CurrentStep);
                 _currentStepIndex++;
