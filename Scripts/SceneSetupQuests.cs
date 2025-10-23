@@ -16,16 +16,11 @@ namespace Holypastry.Bakery.Quests
             yield return QuestServices.WaitUntilReady();
 
             foreach (var quest in _quests)
-            {
                 QuestServices.StartQuest(quest);
-                yield return null;
-            }
-            yield return null;
+
             foreach (var quest in _questsToComplete)
-            {
                 QuestServices.ForceComplete(quest);
-                yield return null;
-            }
+
         }
     }
 }
