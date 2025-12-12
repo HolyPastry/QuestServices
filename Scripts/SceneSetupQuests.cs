@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Holypastry.Bakery.Flow;
+
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
     public class SceneSetupQuests : SceneSetupScript
     {
@@ -12,14 +12,14 @@ namespace Holypastry.Bakery.Quests
 
         public override IEnumerator Routine()
         {
-            yield return FlowServices.WaitUntilReady();
-            yield return QuestServices.WaitUntilReady();
+            yield return Flow.Manager().WaitUntilReady;
+            yield return Quests.Manager().WaitUntilReady;
 
             foreach (var quest in _quests)
-                QuestServices.StartQuest(quest);
+                Quests.Manager().StartQuest(quest);
 
             foreach (var quest in _questsToComplete)
-                QuestServices.ForceComplete(quest);
+                Quests.Manager().ForceComplete(quest);
 
         }
     }

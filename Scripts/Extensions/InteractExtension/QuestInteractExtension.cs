@@ -1,9 +1,8 @@
 using System;
 
-using Bakery.Saves;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
 
     public class QuestInteractExtension : QuestManagerExtension
@@ -45,15 +44,14 @@ namespace Holypastry.Bakery.Quests
 
         internal override void Init()
         {
-            _conditions = SaveServices.Load<InteractConditions>(InteractConditions.SavePath);
-            _conditions ??= new();
+            _conditions = Persistence.Manager().LoadOrCreate<InteractConditions>(InteractConditions.SavePath);
         }
 
         internal override void Save()
         {
             if (_conditions == null) return;
 
-            SaveServices.Save(InteractConditions.SavePath, _conditions);
+            Persistence.Manager().Cache(InteractConditions.SavePath, _conditions);
         }
     }
 

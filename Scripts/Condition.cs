@@ -1,10 +1,11 @@
 
-using System;
 
-namespace Holypastry.Bakery.Quests
+using UnityEngine;
+
+namespace Bakery
 {
 
-    public abstract class Condition : ContentTag
+    public abstract class Condition : ScriptableObject
     {
         public abstract bool Check { get; }
         public bool CanReverse = false;

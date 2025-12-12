@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Bakery.Saves;
+
+using Holypastry.Bakery;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
-    internal class InteractConditions : SerialData
+    internal class InteractConditions : ISerialData
     {
         public const string CollectionPath = "Quests";
         public const string SavePath = "QuestInteractConditions";
@@ -25,19 +26,17 @@ namespace Holypastry.Bakery.Quests
         }
 
 
-        public override void Serialize()
+        public void Serialize()
         {
-            base.Serialize();
 
             foreach (var condition in Conditions)
                 ConditionNames.Add(condition.name);
 
         }
-        public override void Deserialize()
+        public void Deserialize()
         {
             Collection ??= new DataCollection<InteractCondition>(CollectionPath);
 
-            base.Deserialize();
             Conditions = new();
             foreach (var conditionName in ConditionNames)
             {

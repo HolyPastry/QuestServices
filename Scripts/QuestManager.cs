@@ -2,15 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using Bakery.Saves;
-using Holypastry.Bakery.Flow;
+using Holypastry.Bakery;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
-
-
-    public class QuestManager : Service
+    public class QuestManager : MonoBehaviour, IQuestManager
     {
         [SerializeField] private string _collectionPath = "Quests";
         [SerializeField] private float _refreshRate = 1f;
@@ -20,10 +17,11 @@ namespace Holypastry.Bakery.Quests
 
         private List<Quest> _ongoingQuests = new();
         private List<QuestData> _completedQuests = new();
-
-        internal static Action<Quest> CompleteQuestRequest = delegate { };
-
         private List<QuestManagerExtension> _extensions = new();
+
+        private bool _isReady = false;
+
+        public WaitUntil WaitUntilReady => new(() => _isReady);
 
         void Awake()
         {
@@ -33,35 +31,19 @@ namespace Holypastry.Bakery.Quests
 
         void OnDisable()
         {
-            QuestServices.WaitUntilReady = () => new WaitUntil(() => true);
-            QuestServices.StartQuest = delegate { };
-            QuestServices.InterruptQuest = delegate { };
-            QuestServices.StartQuestByName = delegate { };
-            CompleteQuestRequest = delegate { };
-            QuestServices.ForceConditionCheck = delegate { };
-            QuestServices.IsQuestCompleted = (questData) => false;
-            QuestServices.ForceComplete = delegate { };
-            QuestServices.GetCurrentStep = (data) => null;
+
+            Quests.Manager = Quests.UnregisterManager;
         }
 
         void OnEnable()
         {
-            QuestServices.WaitUntilReady = () => WaitUntilReady;
-            QuestServices.StartQuest = StartQuest;
-            QuestServices.InterruptQuest = InterruptQuest;
-            QuestServices.StartQuestByName = StartQuestByName;
-            CompleteQuestRequest = CompleteQuest;
-            QuestServices.ForceConditionCheck = CheckConditions;
-            QuestServices.IsQuestCompleted = IsQuestCompleted;
-            QuestServices.ForceComplete = ForceComplete;
-            QuestServices.GetCurrentStep = GetCurrentStep;
-
+            Quests.Manager = () => this;
         }
 
 
-        protected override IEnumerator Start()
+        protected IEnumerator Start()
         {
-            yield return FlowServices.WaitUntilReady();
+            yield return Flow.Manager().WaitUntilReady;
             _ongoingQuests = new();
             _completedQuests = new();
 
@@ -74,7 +56,7 @@ namespace Holypastry.Bakery.Quests
             _isReady = true;
         }
 
-        private QuestData.Step GetCurrentStep(QuestData data)
+        public QuestData.Step GetCurrentStep(QuestData data)
         {
             if (data == null)
             {
@@ -93,7 +75,7 @@ namespace Holypastry.Bakery.Quests
         }
 
 
-        private bool IsQuestCompleted(QuestData data)
+        public bool IsQuestCompleted(QuestData data)
         {
             return _completedQuests.Contains(data);
         }
@@ -104,7 +86,7 @@ namespace Holypastry.Bakery.Quests
                 Debug.Log($"[QuestManager] {message}");
         }
 
-        private void CheckConditions(QuestData data)
+        public void ForceConditionCheck(QuestData data)
         {
             var quest = _ongoingQuests.Find(x => x.Data == data);
             if (quest == null)
@@ -139,12 +121,7 @@ namespace Holypastry.Bakery.Quests
 
         private void Load()
         {
-            var serialQuests = SaveServices.Load<SerialQuests>(SerialQuests.SaveKey);
-            if (serialQuests == null)
-            {
-                DebugLog("No saved quests found, starting fresh.");
-                return;
-            }
+            var serialQuests = Persistence.Manager().LoadOrCreate<SerialQuests>(SerialQuests.SaveKey);
 
 
             foreach (var serialQuest in serialQuests.Quests)
@@ -180,12 +157,12 @@ namespace Holypastry.Bakery.Quests
 
         private void Save()
         {
-            SaveServices.Save(SerialQuests.SaveKey, new SerialQuests(_ongoingQuests, _completedQuests));
+            Persistence.Manager().Cache(SerialQuests.SaveKey, new SerialQuests(_ongoingQuests, _completedQuests));
             foreach (var extension in _extensions)
                 extension.Save();
 
         }
-        private void ForceComplete(QuestData data)
+        public void ForceComplete(QuestData data)
         {
             var quest = _ongoingQuests.Find(x => x.Data == data);
             if (quest == null)
@@ -194,10 +171,10 @@ namespace Holypastry.Bakery.Quests
                 return;
             }
             DebugLog($"Forcing completion of quest {data.name}");
-            CompleteQuest(quest);
+            ForceComplete(quest);
         }
 
-        private void CompleteQuest(Quest quest)
+        public void ForceComplete(Quest quest)
         {
             DebugLog($"Completing quest {quest.Data.name}");
             if (quest == null)
@@ -208,12 +185,12 @@ namespace Holypastry.Bakery.Quests
 
             _ongoingQuests.Remove(quest);
             _completedQuests.AddUnique(quest.Data);
-            QuestEvents.OnQuestCompleted?.Invoke(quest);
+            Quests.Events.OnQuestCompleted?.Invoke(quest);
             if (quest.Data.IsRepeatable)
                 StartQuest(quest.Data);
             Save();
         }
-        private void StartQuestByName(string questName)
+        public void StartQuestByName(string questName)
         {
             var data = _collection.GetFromName(questName);
             if (data == null)
@@ -224,7 +201,7 @@ namespace Holypastry.Bakery.Quests
             StartQuest(data);
         }
 
-        private void InterruptQuest(QuestData data)
+        public void InterruptQuest(QuestData data)
         {
             DebugLog($"Interrupting quest {data.name}");
             if (data == null)
@@ -245,11 +222,11 @@ namespace Holypastry.Bakery.Quests
             }
 
             _ongoingQuests.Remove(quest);
-            QuestEvents.OnQuestInterrupted?.Invoke(data);
+            Quests.Events.OnQuestInterrupted?.Invoke(data);
             Save();
         }
 
-        private void StartQuest(QuestData data)
+        public void StartQuest(QuestData data)
         {
             DebugLog($"Starting quest {data.name}");
             if (data == null)
@@ -272,7 +249,7 @@ namespace Holypastry.Bakery.Quests
 
             quest = new Quest(data, _verbose);
             _ongoingQuests.Add(quest);
-            QuestEvents.OnQuestStarted?.Invoke(data);
+            Quests.Events.OnQuestStarted?.Invoke(data);
             Save();
         }
     }

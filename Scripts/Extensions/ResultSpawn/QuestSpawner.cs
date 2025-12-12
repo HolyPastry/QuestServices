@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
     public class QuestSpawner : MonoBehaviour
     {
-        public Location Location;
+        public QuestObject Location;
         public GameObject Prefab;
 
         public GameObject Instance;
@@ -19,8 +19,8 @@ namespace Holypastry.Bakery.Quests
 
         IEnumerator Start()
         {
-            yield return FlowServices.WaitUntilReady();
-            yield return QuestServices.WaitUntilReady();
+            yield return Flow.Manager().WaitUntilReady;
+            yield return Quests.Manager().WaitUntilReady;
             if (Prefab == null && Instance == null)
             {
                 Debug.LogWarning("You cannot have Prefab and Instance both null: " + gameObject.name);

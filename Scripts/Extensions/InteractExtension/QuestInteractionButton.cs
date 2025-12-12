@@ -2,7 +2,7 @@ using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
     [RequireComponent(typeof(Button))]
     public class QuestInteractionButton : ValidatedMonoBehaviour

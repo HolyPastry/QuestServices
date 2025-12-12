@@ -1,7 +1,7 @@
 using KBCore.Refs;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
     [RequireComponent(typeof(QuestManager))]
     public abstract class QuestManagerExtension : ValidatedMonoBehaviour

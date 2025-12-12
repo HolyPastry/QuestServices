@@ -1,12 +1,12 @@
 
 using System;
 using System.Collections.Generic;
-using Bakery.Saves;
 
-namespace Holypastry.Bakery.Quests
+
+namespace Bakery
 {
     [Serializable]
-    public class SerialQuests : SerialData
+    public class SerialQuests : ISerialData
     {
         [Serializable]
         public record ProgressEntry
@@ -83,6 +83,14 @@ namespace Holypastry.Bakery.Quests
 
         }
 
+        public void Deserialize()
+        {
+            //moop
+        }
 
+        public void Serialize()
+        {
+            //moop
+        }
     }
 }

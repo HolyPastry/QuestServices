@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Holypastry.Bakery;
 using KBCore.Refs;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
 
     [RequireComponent(typeof(QuestManager))]
@@ -15,8 +16,8 @@ namespace Holypastry.Bakery.Quests
 
         internal static Action<QuestSpawner> Register = delegate { };
         internal static Action<QuestSpawner> Unregister = delegate { };
-        internal static Action<Location> Spawn = delegate { };
-        internal static Action<Location> Unspawn = delegate { };
+        internal static Action<QuestObject> Spawn = delegate { };
+        internal static Action<QuestObject> Unspawn = delegate { };
 
 
         void OnDisable()
@@ -32,19 +33,19 @@ namespace Holypastry.Bakery.Quests
             Unspawn = OnUnspawnRequest;
         }
 
-        private void OnUnspawnRequest(Location location)
+        private void OnUnspawnRequest(QuestObject location)
         {
             if (TryGetSpawner(location, out var spawner))
                 spawner.Unspawn();
         }
 
-        private void OnSpawnRequest(Location location)
+        private void OnSpawnRequest(QuestObject location)
         {
             if (TryGetSpawner(location, out var spawner))
                 spawner.Spawn();
         }
 
-        private bool TryGetSpawner(Location location, out QuestSpawner spawner)
+        private bool TryGetSpawner(QuestObject location, out QuestSpawner spawner)
         {
             spawner = _spawners.Find(s => s.Location == location);
             if (spawner == null)

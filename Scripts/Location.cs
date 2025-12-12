@@ -1,4 +1,7 @@
-namespace Holypastry.Bakery.Quests
+using UnityEngine;
+
+namespace Bakery
 {
-    public class Location : ContentTag { }
+    [CreateAssetMenu(fileName = "New Quest Object", menuName = "Bakery/Quests/Quest Object")]
+    public class QuestObject : ScriptableObject { }
 }

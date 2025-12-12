@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
     [CreateAssetMenu(fileName = "ResultSpawner", menuName = "Bakery/Quests/Results/ResultSpawn", order = 1)]
     public class ResultSpawner : Result
@@ -10,7 +10,7 @@ namespace Holypastry.Bakery.Quests
             Spawn,
             Unspawn
         }
-        public Location Location;
+        public QuestObject Location;
 
         public EnumShiva Action;
 

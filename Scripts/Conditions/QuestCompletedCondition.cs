@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Holypastry.Bakery.Quests;
+using Bakery;
 using UnityEngine;
 
 
@@ -31,7 +31,7 @@ public class QuestCompletedCondition : Condition
     {
         foreach (var quest in _quests)
         {
-            if (!QuestServices.IsQuestCompleted(quest))
+            if (!Quests.Manager().IsQuestCompleted(quest))
             {
                 return false;
             }
@@ -43,7 +43,7 @@ public class QuestCompletedCondition : Condition
     {
         foreach (var quest in _quests)
         {
-            if (QuestServices.IsQuestCompleted(quest))
+            if (Quests.Manager().IsQuestCompleted(quest))
             {
                 return true;
             }

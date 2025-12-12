@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
     [CreateAssetMenu(fileName = "QuestData", menuName = "Bakery/Quests/QuestData", order = 1)]
-    public class QuestData : ContentTag
+    public class QuestData : ScriptableObject
     {
         [Serializable]
         public class Step
@@ -19,7 +19,7 @@ namespace Holypastry.Bakery.Quests
 
         }
 
-
+        public string QuestTitle;
         public string Description;
         public bool IsHidden;
         public bool IsRepeatable;

@@ -1,10 +1,8 @@
-
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery
 {
 
     public class Quest
@@ -137,7 +135,7 @@ namespace Holypastry.Bakery.Quests
                              $"{(condition.Check ? "completed" : "reversed")}");
                     hasChanges |= true;
                     UpdateProgress(condition);
-                    QuestEvents.OnConditionCompleted?.Invoke(this, condition);
+                    Quests.Events.OnConditionCompleted?.Invoke(this, condition);
                 }
 
             }
@@ -158,7 +156,7 @@ namespace Holypastry.Bakery.Quests
                     r.Execute();
                 });
 
-                QuestEvents.OnStepCompleted?.Invoke(this, CurrentStep);
+                Quests.Events.OnStepCompleted?.Invoke(this, CurrentStep);
                 _currentStepIndex++;
             }
             if (_currentStepIndex >= Data.Steps.Count)
@@ -168,7 +166,7 @@ namespace Holypastry.Bakery.Quests
             }
 
             if (IsCompleted)
-                QuestManager.CompleteQuestRequest?.Invoke(this);
+                Quests.Manager().ForceComplete(this);
 
             return true;
 
