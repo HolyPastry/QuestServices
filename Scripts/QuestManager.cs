@@ -47,7 +47,9 @@ namespace Bakery
             _ongoingQuests = new();
             _completedQuests = new();
 
-            Load();
+            if (Persistence.Manager().IsEnabled)
+                Load();
+
 
             foreach (var extension in _extensions)
                 extension.Init();
