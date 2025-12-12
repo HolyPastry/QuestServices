@@ -66,6 +66,22 @@ namespace Bakery
             }
         }
 
+        //Cleaning stuff in case cowboys are fast reloading in the editor
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics()
+        {
+            Events.OnConditionCompleted = delegate { };
+            Events.OnQuestCompleted = delegate { };
+            Events.OnQuestInterrupted = delegate { };
+            Events.OnQuestStarted = delegate { };
+            Events.OnStepCompleted = delegate { };
+
+            Manager = UnregisterManager;
+
+#if UNITY_EDITOR
+            Debug.Log("[Flow] Static fields reset (domain reload skipped)");
+#endif
+        }
 
     }
 
