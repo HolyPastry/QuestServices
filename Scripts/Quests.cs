@@ -17,8 +17,10 @@ namespace Bakery
         }
 
         public static Func<IQuestManager> Manager = UnregisterManager;
+        public static Func<IQuestTimerManager> Timers = UnregisterTimer;
 
         private static IQuestManager _cachedManager = null;
+        private static IQuestTimerManager _cachedTimer = null;
 
         public static IQuestManager UnregisterManager()
         {
@@ -28,6 +30,39 @@ namespace Bakery
             return _cachedManager;
         }
 
+        public static IQuestTimerManager UnregisterTimer()
+        {
+            Debug.LogWarning("[QuestServices] No Quest Timer registered. Please register a Quest Timer before using Quest Services.");
+            _cachedTimer ??= new MockQuestTimer();
+            Timers = () => _cachedTimer;
+            return _cachedTimer;
+        }
+
+        private class MockQuestTimer : IQuestTimerManager
+        {
+            public void CancelTimer(string timerId)
+            { }
+
+            public float GetTimeLeft(string timerId)
+            { return 0f; }
+
+            public bool IsTimerRunning(string timerId)
+            {
+                return false;
+            }
+
+            public void PauseTimer(string timerId)
+            { }
+
+            public void RestartTimer(string timerId)
+            { }
+
+            public void ResumeTimer(string timerId)
+            { }
+
+            public string StartNewTimer(float duration, Action OnTimerEnd)
+            { return string.Empty; }
+        }
         private class MockQuestManager : IQuestManager
         {
             public WaitUntil WaitUntilReady => new(() => true);
@@ -79,7 +114,7 @@ namespace Bakery
             Manager = UnregisterManager;
 
 #if UNITY_EDITOR
-            Debug.Log("[Flow] Static fields reset (domain reload skipped)");
+            Debug.Log("[Quest] Static fields reset (domain reload skipped)");
 #endif
         }
 
