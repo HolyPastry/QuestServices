@@ -15,6 +15,7 @@ namespace Holypastry.Bakery.Quests
         [SerializeField] private string _collectionPath = "Quests";
         [SerializeField] private float _refreshRate = 1f;
         [SerializeField] private bool _verbose = false;
+        [SerializeField] private bool _useSaveSystem = true;
 
         private DataCollection<QuestData> _collection;
 
@@ -64,8 +65,8 @@ namespace Holypastry.Bakery.Quests
             yield return FlowServices.WaitUntilReady();
             _ongoingQuests = new();
             _completedQuests = new();
-
-            Load();
+            if (_useSaveSystem)
+                Load();
 
             foreach (var extension in _extensions)
                 extension.Init();
@@ -180,6 +181,8 @@ namespace Holypastry.Bakery.Quests
 
         private void Save()
         {
+            if (!_useSaveSystem)
+                return;
             SaveServices.Save(SerialQuests.SaveKey, new SerialQuests(_ongoingQuests, _completedQuests));
             foreach (var extension in _extensions)
                 extension.Save();

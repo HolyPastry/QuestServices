@@ -19,7 +19,6 @@ namespace Holypastry.Bakery.Quests
 
         }
 
-
         public string Description;
         public bool IsHidden;
         public bool IsRepeatable;
