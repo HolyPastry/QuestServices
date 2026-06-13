@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Holypastry.Bakery.Quests;
+using Bakery.Quests;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LogicCondition", menuName = "Bakery/Quests/Conditions/Logic")]

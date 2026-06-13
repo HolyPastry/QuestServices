@@ -1,7 +1,8 @@
 
-using System;
 
-namespace Holypastry.Bakery.Quests
+using Bakery.Core;
+
+namespace Bakery.Quests
 {
 
     public abstract class Condition : ContentTag

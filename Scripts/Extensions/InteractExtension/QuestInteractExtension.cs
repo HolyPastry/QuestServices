@@ -3,7 +3,7 @@ using System;
 using Bakery.Saves;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
 
     public class QuestInteractExtension : QuestManagerExtension

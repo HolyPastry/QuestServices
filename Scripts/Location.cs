@@ -1,4 +1,6 @@
-namespace Holypastry.Bakery.Quests
+using UnityEngine;
+
+namespace Bakery.Quests
 {
-    public class Location : ContentTag { }
+    public class Location : ScriptableObject { }
 }

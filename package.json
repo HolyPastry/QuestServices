@@ -1,10 +1,11 @@
 {
     "name": "holypastry.bakery.quest",
     "version": "0.1.1",
-    "displayName": "Quest Services",
+    "displayName": "Bakery Quest",
     "description": "Basic service to add quests to the game.",
     "unity": "2022.3",
     "unityRelease": "42f1",
+    "hideInEditor": false,
     "author": {
         "name": "Sebastien Berton",
         "email": "sebasti1.berton@gmail.com",

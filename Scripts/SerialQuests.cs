@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Bakery.Saves;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
     [Serializable]
     public class SerialQuests : SerialData

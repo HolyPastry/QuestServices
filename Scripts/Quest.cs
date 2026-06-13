@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
 
     public class Quest

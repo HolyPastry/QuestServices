@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Bakery.Core;
 using Bakery.Saves;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
     internal class InteractConditions : SerialData
     {

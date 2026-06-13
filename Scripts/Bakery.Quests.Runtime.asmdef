@@ -1,5 +1,5 @@
 {
-    "name": "Holypastry.Bakery.Quests.Runtime",
+    "name": "Bakery.Quests.Runtime",
     "rootNamespace": "",
     "references": [
         "GUID:96308c8b64ee446d19b379452820aff9",

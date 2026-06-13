@@ -1,4 +1,6 @@
-namespace Holypastry.Bakery.Quests
+using Bakery.Core;
+
+namespace Bakery.Quests
 {
     public abstract class Result : ContentTag
     {

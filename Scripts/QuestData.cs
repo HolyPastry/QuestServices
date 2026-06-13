@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Bakery.Core;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
     [CreateAssetMenu(fileName = "QuestData", menuName = "Bakery/Quests/QuestData", order = 1)]
     public class QuestData : ContentTag

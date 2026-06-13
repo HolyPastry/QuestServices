@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Bakery.Saves;
-using Holypastry.Bakery.Flow;
+using Bakery.Flow;
 using UnityEngine;
+using Bakery.Core;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
 
 

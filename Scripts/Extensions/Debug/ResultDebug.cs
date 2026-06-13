@@ -1,7 +1,7 @@
 using KBCore.Refs;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
     [CreateAssetMenu(fileName = "ResultDebug", menuName = "Bakery/Quests/Results/Debug", order = 1)]
     public class ResultDebug : Result

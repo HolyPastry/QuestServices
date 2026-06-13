@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Bakery.Core;
 using KBCore.Refs;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
 
     [RequireComponent(typeof(QuestManager))]

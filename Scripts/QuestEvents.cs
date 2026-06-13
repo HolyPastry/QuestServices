@@ -1,5 +1,5 @@
 using System;
-using Holypastry.Bakery.Quests;
+using Bakery.Quests;
 
 public static class QuestEvents
 {

@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Holypastry.Bakery.Flow;
+using Bakery.Flow;
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
     public class SceneSetupQuests : SceneSetupScript
     {

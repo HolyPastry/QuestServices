@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Holypastry.Bakery.Quests
+namespace Bakery.Quests
 {
     [CreateAssetMenu(fileName = "ResultSpawner", menuName = "Bakery/Quests/Results/ResultSpawn", order = 1)]
     public class ResultSpawner : Result
