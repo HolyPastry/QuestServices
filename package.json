@@ -1,5 +1,5 @@
 {
-    "name": "holypastry.bakery.quest",
+    "name": "com.holypastry.bakery.quest",
     "version": "0.1.1",
     "displayName": "Bakery Quest",
     "description": "Basic service to add quests to the game.",
